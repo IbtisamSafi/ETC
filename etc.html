@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النادي الهندسي والتكنولوجي ETC | توزيع مهام لجان الأسبوع التقني</title>
+    <!-- خط Cairo العربي الأنيق -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        etc: {
+                            navy: '#0b192c',
+                            card: '#0f233c',
+                            cardHover: '#142d4c',
+                            teal: '#14b8a6',
+                            mint: '#10b981',
+                            light: '#f4f7fa'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f7fa;
+            color: #0b192c;
+            overflow-x: hidden;
+        }
+
+        /* تصميم البطاقات الكحلية العمودية المطابقة لهوية الموقع */
+        .committee-card {
+            background: linear-gradient(180deg, #0c1d33 0%, #091526 100%);
+            border: 1px solid rgba(20, 184, 166, 0.18);
+            box-shadow: 0 12px 30px -8px rgba(11, 25, 44, 0.28);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .committee-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(20, 184, 166, 0.55);
+            box-shadow: 0 18px 36px -10px rgba(11, 25, 44, 0.4);
+        }
+
+        /* الرقم المفرغ الكبير في أعلى يسار البطاقة */
+        .outline-number {
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(20, 184, 166, 0.35);
+            line-height: 1;
+            user-select: none;
+        }
+
+        .committee-card:hover .outline-number {
+            -webkit-text-stroke: 1.5px rgba(20, 184, 166, 0.75);
+        }
+
+        /* شريط تمرير أنيق لتبويبات الشيتات */
+        .sheets-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .sheets-scroll::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .sheets-scroll::-webkit-scrollbar-thumb {
+            background: #14b8a6;
+            border-radius: 10px;
+        }
+
+        /* تنسيق الطباعة */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .committee-card {
+                background: #0b192c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-[#0b192c] text-white sticky top-0 z-40 shadow-lg border-b border-teal-500/20">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <div>
+                <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-snug">
+                    النادي الهندسي والتكنولوجي
+                </h1>
+                <p class="text-xs text-teal-400 font-medium">
+                    جامعة الأقصى • خطة عمل لجان الأسبوع التقني
+                </p>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <!-- شريط تنقل الشيتات السبعة (Sheet Tabs) -->
+        <div class="bg-[#081220] border-t border-white/10 no-print">
+            <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="sheetsTabBar" class="flex items-center gap-1.5 overflow-x-auto sheets-scroll py-2.5">
+                    <!-- يتم توليد التبويبات ديناميكياً -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- منطقة عرض الشيت المختار أو النظرة العامة -->
+        <div id="appContent"></div>
+    </main>
+
+    <footer class="bg-[#0b192c] text-slate-400 text-xs py-3 border-t border-teal-500/20 mt-6 no-print">
+        <div
+            class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>© 2026 النادي الهندسي والتكنولوجي (ETC) - جامعة الأقصى.</p>
+
+            <!-- بيانات التواصل مدمجة بحجم صغير -->
+            <p dir="ltr" class="text-slate-300">
+                <span class="text-teal-400 font-semibold">Contact:</span> Ibtisame Aqeel Safi |
+                <span class="text-teal-400 font-semibold">Phone:</span> +970 597408730
+            </p>
+            <!--            <p class="text-teal-400/90">يتم حفظ التعديلات وحالة إنجاز المهام تلقائياً في المتصفح</p>-->
+
+        </div>
+    </footer>
+
+    <!-- نافذة إضافة مهمة جديدة للجنة -->
+    <div id="addTaskModal"
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-[#0f233c] border border-teal-500/40 rounded-2xl max-w-md w-full p-6 text-white shadow-2xl">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                <h3 class="text-lg font-bold text-teal-400 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span id="modalCommitteeTitle">إضافة مهمة جديدة</span>
+                </h3>
+                <button onclick="closeAddTaskModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="addTaskForm" onsubmit="handleAddTaskSubmit(event)" class="space-y-4">
+                <input type="hidden" id="modalWorkshopId">
+                <input type="hidden" id="modalCommitteeId">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">وصف المهمة المطلوبة</label>
+                    <input type="text" id="newTaskText" required placeholder="مثال: تجهيز شهادات الحضور الإلكترونية..."
+                        class="w-full bg-[#081220] border border-slate-700 focus:border-teal-400 rounded-xl px-3.5 py-2.5 text-sm text-white outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1.5">التوقيت</label>
+                        <select id="newTaskPhase"
+                            class="w-full bg-[#081220] border border-slate-700 focus:border-teal-400 rounded-xl px-3 py-2.5 text-sm text-white outline-none">
+                            <option value="قبل الورشة">قبل الورشة</option>
+                            <option value="أثناء الورشة">أثناء الورشة</option>
+                            <option value="بعد الورشة">بعد الورشة</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1.5">المسؤول (اختياري)</label>
+                        <input type="text" id="newTaskAssignee" placeholder="اسم العضو"
+                            class="w-full bg-[#081220] border border-slate-700 focus:border-teal-400 rounded-xl px-3 py-2.5 text-sm text-white outline-none">
+                    </div>
+                </div>
+                <div class="flex items-center justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddTaskModal()"
+                        class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 cursor-pointer">إلغاء</button>
+                    <button type="submit"
+                        class="px-5 py-2 rounded-xl text-xs font-bold bg-teal-500 hover:bg-teal-400 text-[#0b192c] cursor-pointer">حفظ
+                        المهمة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد إعادة الضبط -->
+    <div id="resetModal"
+        class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div
+            class="bg-[#0f233c] border border-rose-500/40 rounded-2xl max-w-sm w-full p-6 text-white shadow-2xl text-center">
+            <div
+                class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">إعادة ضبط الخطة؟</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-5">سيؤدي هذا الإجراء إلى استعادة جميع المهام الافتراضية
+                للشيتات السبعة وإلغاء علامات الإنجاز المحفوظة.</p>
+            <div class="flex items-center justify-center gap-3">
+                <button onclick="closeResetModal()"
+                    class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 cursor-pointer">تراجع</button>
+                <button onclick="executeReset()"
+                    class="px-5 py-2 rounded-xl text-xs font-bold bg-rose-500 hover:bg-rose-600 text-white cursor-pointer">نعم،
+                    إعادة الضبط</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- إشعار Toast -->
+    <div id="toast"
+        class="fixed bottom-5 left-5 bg-[#0b192c] border border-teal-400 text-white px-4 py-3 rounded-xl shadow-2xl text-xs font-bold flex items-center gap-2.5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <i class="fa-solid fa-circle-check text-teal-400 text-base"></i>
+        <span id="toastMsg">تم الحفظ بنجاح</span>
+    </div>
+
+    <script>
+        // تعريف اللجان الخمس الرسمية المطابقة للصورة والهوية البصرية للنادي
+        const COMMITTEES = [
+            {
+                id: 'activities',
+                number: '01',
+                name: 'لجنة الأنشطة والفعاليات',
+                accentColor: '#14b8a6',
+                roleSummary: 'توفير وتجهيز المكان/القاعة، التنظيم الميداني، وإدارة الفعاليات والورشات.',
+                icon: 'fa-building-user'
+            },
+            {
+                id: 'membership',
+                number: '02',
+                name: 'لجنة العضوية والانتساب',
+                accentColor: '#f59e0b',
+                roleSummary: 'إعداد فورم التسجيل، استقبال الطلبة، حصر أعداد الحضور وتحديث قاعدة البيانات.',
+                icon: 'fa-users-viewfinder'
+            },
+            {
+                id: 'technical',
+                number: '03',
+                name: 'اللجنة التقنية والتدريب',
+                accentColor: '#10b981',
+                roleSummary: 'تقديم الورشة في حال عدم توفر مدرب أو مساندة المدرب تقنياً وتجهيز البيئة التطبيقية.',
+                icon: 'fa-laptop-code'
+            },
+            {
+                id: 'media',
+                number: '04',
+                name: 'لجنة الإعلامية والمنصات الرقمية',
+                accentColor: '#38bdf8',
+                roleSummary: 'تصميم البوسترات، إدارة حسابات Facebook/Instagram/LinkedIn، التصوير والتوثيق.',
+                icon: 'fa-bullhorn'
+            },
+            {
+                id: 'pr',
+                number: '05',
+                name: 'لجنة العلاقات العامة والشراكات',
+                accentColor: '#a855f7',
+                roleSummary: 'التواصل مع المدربين والمحاضرين والشركاء، تنسيق المواعيد، الاستقبال والتكريم.',
+                icon: 'fa-handshake'
+            }
+        ];
+
+        // بيانات الشيتات السبعة (ورشات الأسبوع التقني)
+        const DEFAULT_WORKSHOPS = [
+            {
+                id: 1,
+                shortTitle: '1. افتتاح + AI',
+                title: 'افتتاح الأسبوع التقني + الذكاء الاصطناعي وأدواته + Tech Path',
+                day: 'الخميس',
+                date: '19/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'وجاهي',
+                location: 'فرع خانيونس',
+                speaker: 'يُحدد لاحقاً',
+                affiliation: 'كلية الحاسبات وتكنولوجيا المعلومات',
+                topics: [
+                    'كلمة افتتاح الأسبوع التقني والتعريف بأنشطة النادي',
+                    'مقدمة في الذكاء الاصطناعي التوليدي وأهم أدواته العملية',
+                    'رسم المسار التقني (Tech Path) وتوجيه الطلبة للتخصصات المطلوبة'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w1-a1', text: 'حجز وتجهيز القاعة الرئيسية في فرع خانيونس للافتتاح والورشة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-a2', text: 'تجهيز الصوتيات، البروجيكتور، وترتيب مقاعد الضيوف والطلبة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-a3', text: 'إدارة التنظيم الميداني وتقديم فقرة عرافة الافتتاح', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w1-m1', text: 'إعداد ونشر فورم التسجيل في ورشة الافتتاح والذكاء الاصطناعي', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-m2', text: 'استقبال الطلبة عند مدخل القاعة وتسجيل الحضور الفعلي', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w1-m3', text: 'حصر إجمالي أعداد الحضور وإدخال بيانات المنتسبين الجدد', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w1-t1', text: 'تجهيز العرض التقديمي التعريفي للنادي وتجربة أجهزة العرض', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-t2', text: 'تحضير مدرب بديل من اللجنة لتغطية محور Tech Path أو AI عند الحاجة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-t3', text: 'مساندة المحاضر تقنياً خلال التطبيقات الحية لأدوات الذكاء الاصطناعي', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w1-md1', text: 'تصميم ونشر بوستر انطلاق الأسبوع التقني والورشة الأولى على المنصات', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-md2', text: 'التصوير الفوتوغرافي والفيديو لحفل الافتتاح وتفاعل الطلبة', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w1-md3', text: 'نشر تقرير مصور لليوم الأول على Facebook وInstagram وLinkedIn', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w1-p1', text: 'التنسيق مع عمادة كلية الحاسبات لتأكيد اسم المحاضر ومحاور الافتتاح', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-p2', text: 'دعوة إدارة الفرع وأعضاء الهيئة التدريسية لحضور الافتتاح', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w1-p3', text: 'استقبال المحاضرين والضيوف وتقديم درع/شهادة شكر للمحاضر', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ]
+                }
+            },
+            {
+                id: 2,
+                shortTitle: '2. الأمن السيبراني',
+                title: 'الأمن السيبراني والحماية الرقمية (Cybersecurity)',
+                day: 'الجمعة',
+                date: '20/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'إلكتروني',
+                location: 'عبر الإنترنت (Online)',
+                speaker: 'أ. أحمد المقيد',
+                affiliation: 'مدرب خارجي (شراكة)',
+                topics: [
+                    'مفاهيم الأمن السيبراني والهندسة الاجتماعية وطرق الوقاية',
+                    'حماية الحسابات والبيانات الشخصية والمؤسسية',
+                    'مسارات العمل والشهادات الاحترافية في مجال أمن المعلومات'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w2-a1', text: 'توفير وتجهيز غرفة البث الإلكتروني (Zoom / Google Meet) بسعة مناسبة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w2-a2', text: 'إدارة غرفة البث، تنظيم المداخلات الصوتية، وضبط الوقت', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w2-m1', text: 'إعداد فورم التسجيل الإلكتروني وإرسال رابط البث للمسجلين', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w2-m2', text: 'نشر رابط تأكيد الحضور داخل الجلسة وحصر المشاركين الفعليين', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w2-m3', text: 'مطابقة كشف المسجلين مع الحضور الفعلي لإصدار الشهادات', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w2-t1', text: 'التنسيق التقني مع المدرب أ. أحمد المقيد وتجربة مشاركة الشاشة والصوت', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w2-t2', text: 'تسجيل الجلسة بجودة عالية ومساعدة المدرب في الإجابة على الأسئلة التقنية', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w2-t3', text: 'تجهيز عضو بديل من اللجنة لتقديم ملخص عملي في حال انقطاع الاتصال', phase: 'قبل الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w2-md1', text: 'تصميم بوستر الورشة الثانية مع صورة المدرب أ. أحمد المقيد ونشره', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w2-md2', text: 'أخذ لقطات شاشة (Screenshots) تفاعلية أثناء اللقاء الإلكتروني', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w2-md3', text: 'نشر ملخص لأبرز نصائح الأمن السيبراني وتغطية الورشة على المنصات', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w2-p1', text: 'التواصل المستمر مع المدرب أ. أحمد المقيد لتأكيد الموعد والمحاور', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w2-p2', text: 'إرسال رسالة شكر رسمية وشهادة تقدير إلكترونية للمدرب والجهة الشريكة', phase: 'بعد الورشة', assignee: '', done: false}
+                    ]
+                }
+            },
+            {
+                id: 3,
+                shortTitle: '3. Problem Solving',
+                title: 'Problem Solving - حل المشكلات البرمجية والتفكير الخوارزمي',
+                day: 'السبت',
+                date: '21/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'إلكتروني',
+                location: 'عبر الإنترنت (Online)',
+                speaker: 'أ. أحمد',
+                affiliation: 'كلية الحاسبات وتكنولوجيا المعلومات',
+                topics: [
+                    'أساسيات التفكير المنطقي وتحليل المشكلات البرمجية',
+                    'التعامل مع منصات التدريب مثل Codeforces و LeetCode',
+                    'تطبيق عملي لحل مسائل برمجية متدرجة الصعوبة'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w3-a1', text: 'إنشاء وتجهيز رابط اللقاء الإلكتروني وتجربة صلاحيات المشرفين', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w3-a2', text: 'افتتاح الجلسة الترحيبية وإدارة الأسئلة والنقاش مع الطلبة', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w3-m1', text: 'إطلاق فورم التسجيل وتوجيه الطلبة لإنشاء حسابات على منصة التدريب', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w3-m2', text: 'رصد وحصر أعداد الحضور وتوثيق مشاركة الطلبة في التحديات', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w3-t1', text: 'تجهيز قائمة المسائل التدريبية (Sheet) بالتنسيق مع المحاضر أ. أحمد', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w3-t2', text: 'مساندة المحاضر في متابعة حلول الطلبة عبر الدردشة وتقديم التلميحات', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w3-t3', text: 'جاهزية فريق التدريب باللجنة لشرح المسائل في حال تعذر المحاضر', phase: 'قبل الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w3-md1', text: 'تصميم ونشر إعلان ورشة Problem Solving على جميع حسابات النادي', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w3-md2', text: 'توثيق الجلسة ونشر بوست التغطية مع رابط شيت التدريب للطلبة', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w3-p1', text: 'التنسيق مع المحاضر أ. أحمد من كلية الحاسبات وتأكيد جدول الورشة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w3-p2', text: 'تقديم الشكر الرسمي للمحاضر وتوثيق التعاون مع الكلية', phase: 'بعد الورشة', assignee: '', done: false}
+                    ]
+                }
+            },
+            {
+                id: 4,
+                shortTitle: '4. ICDL Workshop',
+                title: 'ICDL Workshop - مهارات الحاسوب الأساسية والتطبيقات المكتبية',
+                day: 'الأحد',
+                date: '22/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'وجاهي',
+                location: 'فرع الوسطى',
+                speaker: 'أحد طلاب اللجنة التقنية',
+                affiliation: 'النادي الهندسي والتكنولوجي ETC',
+                topics: [
+                    'أساسيات إدارة الملفات ونظام التشغيل بكفاءة',
+                    'مهارات متقدمة في Microsoft Word و Excel لتنسيق التقارير والجداول',
+                    'إعداد العروض التقديمية الاحترافية عبر PowerPoint'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w4-a1', text: 'حجز مختبر حاسوب مجهز في فرع الوسطى وتفقد الأجهزة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w4-a2', text: 'تنظيم دخول الطلبة للمختبر وتوزيعهم على الأجهزة بسلاسة', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w4-m1', text: 'إعداد فورم التسجيل لطلبة فرع الوسطى وتحديد الطاقة الاستيعابية للمختبر', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w4-m2', text: 'تسجيل الحضور الورقي/الإلكتروني داخل المختبر وحصر العدد النهائي', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w4-t1', text: 'تكليف المدرب الطالب من اللجنة وإعداد الحقيبة التدريبية والملفات العملية', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w4-t2', text: 'التأكد من تفعيل حزمة Office على جميع أجهزة المختبر قبل البدء', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w4-t3', text: 'تقديم الورشة عملياً ومساعدة الطلبة في التطبيق خطوة بخطوة', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w4-md1', text: 'تصميم بوستر ورشة ICDL المخصصة لفرع الوسطى ونشره', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w4-md2', text: 'التواجد في فرع الوسطى لتصوير التطبيق العملي ونشر التغطية', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w4-p1', text: 'التنسيق الإداري مع إدارة فرع الوسطى لتسهيل دخول الفريق والطلبة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w4-p2', text: 'إصدار شهادة شكر وتقدير للمدرب الطالب تقديراً لجهوده', phase: 'بعد الورشة', assignee: '', done: false}
+                    ]
+                }
+            },
+            {
+                id: 5,
+                shortTitle: '5. UI/UX Design',
+                title: 'UI/UX Design - تصميم واجهات وتجربة المستخدم باستخدام Figma',
+                day: 'الاثنين',
+                date: '23/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'وجاهي',
+                location: 'فرع خانيونس',
+                speaker: 'أ. محمد الشاعر',
+                affiliation: 'موظف في جامعة الأقصى',
+                topics: [
+                    'الفرق بين UI و UX ومبادئ التصميم التفاعلي الحديث',
+                    'بناء الهيكل التخطيطي (Wireframing) ونماذج المحاكاة (Prototyping)',
+                    'تطبيق عملي لتصميم واجهة تطبيق جوال متكاملة'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w5-a1', text: 'توفير وتجهيز مختبر/قاعة مجهزة بالإنترنت في فرع خانيونس', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w5-a2', text: 'تنظيم القاعة، توفير التوصيلات الكهربائية لأجهزة اللابتوب، وإدارة الوقت', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w5-m1', text: 'نشر فورم التسجيل وتنبيه الطلبة لإحضار أجهزة اللابتوب وتجهيز حساب Figma', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w5-m2', text: 'استقبال المسجلين، حصر الحضور الفعلي، وتحديث قاعدة بيانات المهتمين بالتصميم', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w5-t1', text: 'تجهيز ملفات الموارد (الأيقونات والخطوط) ومشاركتها مع الطلبة قبل الورشة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w5-t2', text: 'مساندة المدرب أ. محمد الشاعر في حل المشاكل التقنية للطلبة أثناء التصميم', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w5-t3', text: 'تجهيز عضو متمكن في Figma كمساند أو بديل عند الحاجة', phase: 'قبل الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w5-md1', text: 'تصميم ونشر بوستر ورشة UI/UX بلمسة بصرية إبداعية', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w5-md2', text: 'تصوير مخرجات تصاميم الطلبة ولقطات من الورشة ونشرها على المنصات', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w5-p1', text: 'التنسيق المباشر مع الأستاذ محمد الشاعر لتأكيد الموعد ومتطلبات الورشة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w5-p2', text: 'استقبال المدرب وتكريمه بشهادة شكر باسم النادي الهندسي والتكنولوجي', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ]
+                }
+            },
+            {
+                id: 6,
+                shortTitle: '6. Git & GitHub',
+                title: 'Git & GitHub - إدارة النسخ البرمجية والعمل الجماعي',
+                day: 'الثلاثاء',
+                date: '24/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'إلكتروني',
+                location: 'عبر الإنترنت (Online)',
+                speaker: 'أ. أحمد',
+                affiliation: 'مدرب خارجي (شراكة)',
+                topics: [
+                    'مفهوم أنظمة التحكم بالنسخ (Version Control) وأهميتها للمبرمجين',
+                    'أوامر Git الأساسية: Init, Commit, Push, Pull, Branch, Merge',
+                    'إدارة المشاريع الجماعية وبناء ملف تعريفي احترافي على GitHub'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w6-a1', text: 'تجهيز رابط البث الإلكتروني والتأكد من استقرار الجلسة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w6-a2', text: 'إدارة الجلسة الإلكترونية وتنظيم فقرة الأسئلة التطبيقية', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w6-m1', text: 'إعداد فورم التسجيل وإرسال تعليمات تثبيت Git وإنشاء حساب GitHub', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w6-m2', text: 'تسجيل وحصر أعداد الحضور الإلكتروني وتوثيق المشاركين', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w6-t1', text: 'تجهيز مستودع تدريبي (Repository) للتطبيق العملي بالتنسيق مع المدرب', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w6-t2', text: 'مساعدة الطلبة في حل أخطاء الأوامر (Conflicts) أثناء التطبيق الحي', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w6-t3', text: 'تجهيز مدرب بديل من اللجنة لتغطية أساسيات Git في حال أي طارئ', phase: 'قبل الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w6-md1', text: 'تصميم ونشر إعلان ورشة Git & GitHub عبر منصات التواصل', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w6-md2', text: 'نشر ملخص لأهم أوامر Git مع تغطية ختام الورشة على LinkedIn وFacebook', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w6-p1', text: 'التواصل مع المدرب أ. أحمد لتأكيد تفاصيل اللقاء ومحاور التطبيق', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w6-p2', text: 'إرسال شهادة الشكر والتقدير للمدرب والجهة الشريكة', phase: 'بعد الورشة', assignee: '', done: false}
+                    ]
+                }
+            },
+            {
+                id: 7,
+                shortTitle: '7. سوق العمل + الختام',
+                title: 'الاستعداد لسوق العمل التقني (المسار المهني) + ختام الأسبوع التقني',
+                day: 'الأربعاء',
+                date: '25/11/2026',
+                time: '10:00 ص – 1:00 م',
+                mode: 'وجاهي',
+                location: 'فرع غزة',
+                speaker: 'محاضرو وموظفو الجامعة',
+                affiliation: 'جامعة الأقصى',
+                topics: [
+                    'كتابة السيرة الذاتية التقنية (ATS CV) وبناء حساب LinkedIn احترافي',
+                    'مهارات اجتياز المقابلات التقنية والعمل الحر (Freelancing)',
+                    'الحفل الختامي للأسبوع التقني وتكريم المدربين واللجان والطلبة المتميزين'
+                ],
+                tasks: {
+                    activities: [
+                        {id: 'w7-a1', text: 'حجز وتجهيز القاعة الكبرى في فرع غزة للحفل الختامي والورشة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-a2', text: 'تجهيز منصة التكريم، الصوتيات، وترتيب فقرات برنامج الختام', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-a3', text: 'إدارة الحفل الختامي وتنظيم تسليم الشهادات والدروع', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ],
+                    membership: [
+                        {id: 'w7-m1', text: 'إعداد فورم التسجيل لليوم الختامي وحصر حضور كافة الورشات السابقة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-m2', text: 'استقبال الحضور في فرع غزة وتوثيق الكشف الختامي الشامل للأسبوع', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w7-m3', text: 'إعداد الإحصائية النهائية لأعداد المستفيدين والمنتسبين الجدد خلال الأسبوع', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    technical: [
+                        {id: 'w7-t1', text: 'إعداد فيديو/عرض حصاد إنجازات الأسبوع التقني لعرضه في الختام', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-t2', text: 'مساندة المحاضرين تقنياً وتجهيز نماذج السير الذاتية للمراجعة الحية', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w7-t3', text: 'إصدار وإرسال الشهادات الرقمية لجميع المشاركين في الأسبوع التقني', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    media: [
+                        {id: 'w7-md1', text: 'تصميم بوستر اليوم الختامي ودعوة الطلبة للمشاركة في فرع غزة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-md2', text: 'تغطية إعلامية شاملة للحفل الختامي والتكريمات وتصوير الفريق', phase: 'أثناء الورشة', assignee: '', done: false},
+                        {id: 'w7-md3', text: 'نشر التقرير الختامي الشامل للأسبوع التقني على كافة منصات النادي', phase: 'بعد الورشة', assignee: '', done: false}
+                    ],
+                    pr: [
+                        {id: 'w7-p1', text: 'التنسيق مع محاضري وموظفي الجامعة المشاركين في ندوة المسار المهني', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-p2', text: 'تجهيز شهادات الشكر والدروع التقديرية لجميع المدربين والجهات الداعمة', phase: 'قبل الورشة', assignee: '', done: false},
+                        {id: 'w7-p3', text: 'استقبال ضيوف الشرف وإدارة بروتوكول التكريم الختامي', phase: 'أثناء الورشة', assignee: '', done: false}
+                    ]
+                }
+            }
+        ];
+
+        const STORAGE_KEY = 'etc_tech_week_2026_v1';
+        let workshopsData = [];
+        let activeTab = 1; // 0 = نظرة عامة شاملة، 1..7 = الشيتات السبعة
+
+        // تحميل البيانات من localStorage أو استخدام الافتراضية
+        function loadData() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    workshopsData = JSON.parse(saved);
+                } else {
+                    workshopsData = JSON.parse(JSON.stringify(DEFAULT_WORKSHOPS));
+                }
+            } catch (e) {
+                workshopsData = JSON.parse(JSON.stringify(DEFAULT_WORKSHOPS));
+            }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(workshopsData));
+            } catch (e) {
+                console.error('Storage error', e);
+            }
+        }
+
+        // حساب إحصائيات ورشة محددة
+        function getWorkshopStats(ws) {
+            let total = 0;
+            let completed = 0;
+            COMMITTEES.forEach(c => {
+                const list = ws.tasks[c.id] || [];
+                total += list.length;
+                completed += list.filter(t => t.done).length;
+            });
+            const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+            return {total, completed, percent};
+        }
+
+        // رسم شريط التبويبات العلوي (7 شيتات + نظرة عامة)
+        function renderTabs() {
+            const tabBar = document.getElementById('sheetsTabBar');
+            let html = `
+                <button onclick="switchTab(0)" class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-2 cursor-pointer ${activeTab === 0
+                    ? 'bg-teal-500 text-[#0b192c] shadow-md shadow-teal-500/25'
+                    : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
+                }">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>ملخص الأسبوع (نظرة عامة)</span>
+                </button>
+                <div class="h-5 w-px bg-white/15 mx-1 flex-shrink-0"></div>
+            `;
+
+            workshopsData.forEach(ws => {
+                const stats = getWorkshopStats(ws);
+                const isActive = activeTab === ws.id;
+                html += `
+                    <button onclick="switchTab(${ws.id})" class="px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-2 cursor-pointer border ${isActive
+                        ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-[#0b192c] border-teal-300 shadow-md shadow-teal-500/20'
+                        : 'bg-[#0f233c] text-slate-200 border-white/10 hover:border-teal-500/40 hover:text-white'
+                    }">
+                        <span class="px-1.5 py-0.5 rounded text-[10px] font-black ${isActive ? 'bg-[#0b192c] text-teal-400' : 'bg-teal-500/20 text-teal-400'}">
+                            شيت ${ws.id}
+                        </span>
+                        <span>${ws.shortTitle}</span>
+                        <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ${stats.percent === 100
+                        ? (isActive ? 'bg-emerald-900 text-emerald-200' : 'bg-emerald-500/20 text-emerald-400')
+                        : (isActive ? 'bg-[#0b192c]/20 text-[#0b192c]' : 'bg-white/10 text-slate-300')
+                    }">
+                            ${stats.percent}%
+                        </span>
+                    </button>
+                `;
+            });
+
+            tabBar.innerHTML = html;
+        }
+
+        function switchTab(tabId) {
+            activeTab = tabId;
+            renderTabs();
+            renderMainContent();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // عرض المحتوى الرئيسي حسب التبويب النشط
+        function renderMainContent() {
+            const container = document.getElementById('appContent');
+            if (activeTab === 0) {
+                container.innerHTML = renderOverviewHTML();
+            } else {
+                const ws = workshopsData.find(w => w.id === activeTab);
+                if (ws) {
+                    container.innerHTML = renderWorkshopSheetHTML(ws);
+                }
+            }
+        }
+
+        // بناء واجهة الشيت الواحد (ورشة + البطاقات الكحلية الخمس للجان)
+        function renderWorkshopSheetHTML(ws) {
+            const stats = getWorkshopStats(ws);
+            const isOnsite = ws.mode === 'وجاهي';
+
+            return `
+                <!-- بطاقة بيانات الورشة العلوية -->
+                <section class="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-5 sm:p-6 mb-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-teal-400 to-emerald-600"></div>
+                    
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                        <div class="space-y-2.5">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="bg-[#0b192c] text-teal-400 text-xs font-extrabold px-3 py-1 rounded-full">
+                                    الشيت ${ws.id} من 7
+                                </span>
+                                <span class="text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 ${isOnsite
+                    ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                    : 'bg-sky-100 text-sky-800 border border-sky-200'
+                }">
+                                    <i class="fa-solid ${isOnsite ? 'fa-location-dot' : 'fa-wifi'}"></i>
+                                    ${ws.mode} (${ws.location})
+                                </span>
+                                <span class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                    <i class="fa-regular fa-calendar text-teal-600"></i>
+                                    ${ws.day} ${ws.date}
+                                </span>
+                                <span class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                    <i class="fa-regular fa-clock text-teal-600"></i>
+                                    ${ws.time}
+                                </span>
+                            </div>
+
+                            <h2 class="text-xl sm:text-2xl font-black text-[#0b192c] leading-snug">
+                                ${ws.title}
+                            </h2>
+
+                            <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-slate-600">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-chalkboard-user text-teal-600"></i>
+                                    <span>المحاضر / المدرب: <strong class="text-[#0b192c]">${ws.speaker}</strong></span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-building-columns text-teal-600"></i>
+                                    <span>الجهة: <strong class="text-[#0b192c]">${ws.affiliation}</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- مؤشر نسبة الإنجاز للشيت -->
+                        <div class="bg-[#0b192c] text-white rounded-2xl p-4 sm:p-5 min-w-[260px] border border-teal-500/30 shadow-md">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs text-slate-300 font-semibold">نسبة جاهزية الورشة</span>
+                                <span class="text-lg font-black text-teal-400">${stats.percent}%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden mb-2">
+                                <div class="bg-gradient-to-l from-teal-400 to-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: ${stats.percent}%"></div>
+                            </div>
+                            <div class="flex items-center justify-between text-[11px] text-slate-400">
+                                <span>المهام المنجزة: <strong class="text-white">${stats.completed}</strong> من ${stats.total}</span>
+                                <span>${stats.percent === 100 ? 'جاهزة للتنفيذ ✓' : 'قيد التجهيز'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محاور الورشة الأكاديمية -->
+                    <div class="mt-4 pt-4 border-t border-slate-100">
+                        <div class="text-xs font-bold text-slate-500 mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-list-check text-teal-600"></i>
+                            <span>المحتوى والمحاور الرئيسية للورشة:</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            ${ws.topics.map(topic => `
+                                <div class="bg-slate-50 border border-slate-200/70 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 flex items-start gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-teal-500 mt-1.5 flex-shrink-0"></span>
+                                    <span>${topic}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- عنوان قسم توزيع المهام على اللجان الخمس -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-[#0b192c] flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-teal-500 inline-block"></span>
+                            توزيع المهام التشغيلية على لجان النادي الخمس
+                        </h3>
+                        <p class="text-xs text-slate-500">اضغط على أي مهمة لتحديدها كمكتملة، أو أضف مهام مخصصة لكل لجنة</p>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs no-print">
+                        ${ws.id > 1 ? `<button onclick="switchTab(${ws.id - 1})" class="bg-white hover:bg-slate-100 text-[#0b192c] font-bold px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs cursor-pointer"><i class="fa-solid fa-arrow-right ml-1 text-teal-600"></i> الشيت السابق</button>` : ''}
+                        ${ws.id < 7 ? `<button onclick="switchTab(${ws.id + 1})" class="bg-white hover:bg-slate-100 text-[#0b192c] font-bold px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs cursor-pointer">الشيت التالي <i class="fa-solid fa-arrow-left mr-1 text-teal-600"></i></button>` : ''}
+                    </div>
+                </div>
+
+                <!-- الشبكة الخماسية للبطاقات الكحلية العمودية (مطابقة لتصميم الموقع في الصورة) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-5 items-stretch">
+                    ${COMMITTEES.map(committee => renderCommitteeCardHTML(ws, committee)).join('')}
+                </div>
+            `;
+        }
+
+        // بناء بطاقة اللجنة الكحلية العمودية
+        function renderCommitteeCardHTML(ws, committee) {
+            const tasks = ws.tasks[committee.id] || [];
+            const doneCount = tasks.filter(t => t.done).length;
+            const totalCount = tasks.length;
+
+            return `
+                <article class="committee-card rounded-2xl p-5 text-white flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <!-- رأس البطاقة: الرقم المفرغ الكبير + اسم اللجنة -->
+                        <div class="flex items-start justify-between gap-2 mb-3">
+                            <div class="pt-1">
+                                <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/10 text-teal-300 inline-block mb-2">
+                                    ${doneCount}/${totalCount} مهام
+                                </span>
+                                <h4 class="text-lg font-extrabold text-white leading-snug">
+                                    ${committee.name}
+                                </h4>
+                            </div>
+                            <span class="outline-number text-5xl font-black tracking-tighter">
+                                ${committee.number}
+                            </span>
+                        </div>
+
+                        <!-- خط فاصل ملون مطابق للصورة -->
+                        <div class="h-1 w-full rounded-full mb-3" style="background: linear-gradient(90deg, transparent, ${committee.accentColor});"></div>
+
+                        <!-- نبذة عن دور اللجنة في هذه الورشة -->
+                        <p class="text-[11px] text-slate-300/90 leading-relaxed mb-4 bg-white/5 rounded-xl p-2.5 border border-white/5">
+                            <i class="fa-solid ${committee.icon} ml-1" style="color: ${committee.accentColor}"></i>
+                            ${committee.roleSummary}
+                        </p>
+
+                        <!-- قائمة المهام القابلة للتأشير -->
+                        <ul class="space-y-2.5 mb-4">
+                            ${tasks.map(task => `
+                                <li class="group bg-[#081322]/90 hover:bg-[#132b49] border ${task.done ? 'border-emerald-500/40 bg-emerald-950/20' : 'border-white/10'} rounded-xl p-3 transition">
+                                    <div class="flex items-start gap-2.5">
+                                        <button onclick="toggleTask(${ws.id}, '${committee.id}', '${task.id}')" class="mt-0.5 w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 border transition cursor-pointer ${task.done
+                    ? 'bg-teal-500 border-teal-400 text-[#0b192c]'
+                    : 'border-slate-500 hover:border-teal-400 bg-transparent'
+                }">
+                                            ${task.done ? '<i class="fa-solid fa-check text-xs font-black"></i>' : ''}
+                                        </button>
+                                        <div class="flex-1 min-w-0">
+                                            <p onclick="toggleTask(${ws.id}, '${committee.id}', '${task.id}')" class="text-xs font-semibold leading-relaxed cursor-pointer ${task.done ? 'line-through text-slate-400' : 'text-slate-100'
+                }">
+                                                ${task.text}
+                                            </p>
+                                            <div class="flex flex-wrap items-center justify-between gap-1.5 mt-2">
+                                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${getPhaseBadgeClass(task.phase)}">
+                                                    ${task.phase}
+                                                </span>
+                                                <div class="flex items-center gap-1.5">
+                                                    ${task.assignee ? `<span class="text-[10px] text-teal-300 bg-teal-500/10 px-2 py-0.5 rounded-md"><i class="fa-solid fa-user text-[9px] ml-1"></i>${task.assignee}</span>` : ''}
+                                                    <button onclick="deleteTask(${ws.id}, '${committee.id}', '${task.id}')" class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-rose-400 text-[11px] px-1 transition cursor-pointer no-print" title="حذف المهمة">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- زر إضافة مهمة جديدة داخل البطاقة -->
+                    <button onclick="openAddTaskModal(${ws.id}, '${committee.id}', '${committee.name}')" class="w-full py-2.5 rounded-xl border border-dashed border-teal-500/40 hover:border-teal-400 hover:bg-teal-500/10 text-teal-300 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer no-print">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>إضافة مهمة للجنة</span>
+                    </button>
+                </article>
+            `;
+        }
+
+        function getPhaseBadgeClass(phase) {
+            if (phase === 'قبل الورشة') return 'bg-amber-500/15 text-amber-300 border border-amber-500/25';
+            if (phase === 'أثناء الورشة') return 'bg-teal-500/15 text-teal-300 border border-teal-500/25';
+            return 'bg-purple-500/15 text-purple-300 border border-purple-500/25';
+        }
+
+        // بناء صفحة النظرة العامة الشاملة (ملخص الأسبوع التقني)
+        function renderOverviewHTML() {
+            let grandTotal = 0;
+            let grandCompleted = 0;
+            workshopsData.forEach(ws => {
+                const s = getWorkshopStats(ws);
+                grandTotal += s.total;
+                grandCompleted += s.completed;
+            });
+            const grandPercent = grandTotal === 0 ? 0 : Math.round((grandCompleted / grandTotal) * 100);
+
+            return `
+                <div class="space-y-6">
+                    <!-- بطاقة الترحيب والإحصائيات العامة -->
+                    <div class="bg-[#0b192c] text-white rounded-2xl p-6 sm:p-8 border border-teal-500/30 shadow-xl relative overflow-hidden">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <span class="bg-teal-500/20 text-teal-300 text-xs font-bold px-3 py-1 rounded-full border border-teal-500/30">
+                                    لوحة المتابعة الشاملة • 19 – 25 نوفمبر 2026
+                                </span>
+                                <h2 class="text-2xl sm:text-3xl font-black mt-3 mb-2">
+                                    خطة عمل لجان الأسبوع التقني (7 شيتات متكاملة)
+                                </h2>
+                                <p class="text-sm text-slate-300 max-w-2xl leading-relaxed">
+                                    توزيع المهام التشغيلية والتنظيمية على لجان النادي الهندسي والتكنولوجي الخمس لجميع ورشات الأسبوع (الوجاهية في خانيونس والوسطى وغزة، والإلكترونية عبر الإنترنت).
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3 sm:gap-4 text-center flex-shrink-0">
+                                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                                    <div class="text-2xl sm:text-3xl font-black text-teal-400">7</div>
+                                    <div class="text-xs text-slate-300 mt-1">ورشات تدريبية</div>
+                                </div>
+                                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                                    <div class="text-2xl sm:text-3xl font-black text-amber-400">${grandTotal}</div>
+                                    <div class="text-xs text-slate-300 mt-1">إجمالي المهام</div>
+                                </div>
+                                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                                    <div class="text-2xl sm:text-3xl font-black text-emerald-400">${grandPercent}%</div>
+                                    <div class="text-xs text-slate-300 mt-1">نسبة الإنجاز</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- بطاقات اللجان الخمس وأدوارها المعتمدة -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                        ${COMMITTEES.map(c => `
+                            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="w-9 h-9 rounded-xl bg-[#0b192c] text-teal-400 flex items-center justify-center text-sm font-bold">
+                                        <i class="fa-solid ${c.icon}"></i>
+                                    </span>
+                                    <span class="text-2xl font-black text-slate-200">${c.number}</span>
+                                </div>
+                                <h4 class="font-extrabold text-sm text-[#0b192c] mb-1">${c.name}</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">${c.roleSummary}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- جدول ملخص الشيتات السبعة مع إمكانية الانتقال المباشر -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base text-[#0b192c]">جدول الشيتات السبعة وحالة الجاهزية</h3>
+                            <span class="text-xs text-slate-500">اضغط على أي صف لفتح الشيت الخاص بالورشة</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-right border-collapse">
+                                <thead>
+                                    <tr class="bg-[#0b192c] text-white text-xs">
+                                        <th class="py-3.5 px-4 font-bold">الشيت</th>
+                                        <th class="py-3.5 px-4 font-bold">اسم الورشة / الفعالية</th>
+                                        <th class="py-3.5 px-4 font-bold">اليوم والتاريخ</th>
+                                        <th class="py-3.5 px-4 font-bold">الانعقاد والمكان</th>
+                                        <th class="py-3.5 px-4 font-bold">المحاضر / المدرب</th>
+                                        <th class="py-3.5 px-4 font-bold">الإنجاز</th>
+                                        <th class="py-3.5 px-4 font-bold text-center">إجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 text-xs">
+                                    ${workshopsData.map(ws => {
+                const st = getWorkshopStats(ws);
+                return `
+                                            <tr onclick="switchTab(${ws.id})" class="hover:bg-teal-50/60 transition cursor-pointer">
+                                                <td class="py-3.5 px-4 font-black text-teal-700">شيت ${ws.id}</td>
+                                                <td class="py-3.5 px-4 font-bold text-[#0b192c]">${ws.title}</td>
+                                                <td class="py-3.5 px-4 text-slate-600 whitespace-nowrap">${ws.day} ${ws.date}</td>
+                                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                                    <span class="px-2.5 py-1 rounded-full font-bold text-[11px] ${ws.mode === 'وجاهي' ? 'bg-amber-100 text-amber-800' : 'bg-sky-100 text-sky-800'}">
+                                                        ${ws.mode} - ${ws.location}
+                                                    </span>
+                                                </td>
+                                                <td class="py-3.5 px-4 font-semibold text-slate-700">${ws.speaker}</td>
+                                                <td class="py-3.5 px-4 w-36">
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="w-full bg-slate-200 rounded-full h-2">
+                                                            <div class="bg-teal-500 h-2 rounded-full" style="width: ${st.percent}%"></div>
+                                                        </div>
+                                                        <span class="font-bold text-slate-700">${st.percent}%</span>
+                                                    </div>
+                                                </td>
+                                                <td class="py-3.5 px-4 text-center">
+                                                    <button class="bg-[#0b192c] hover:bg-teal-600 text-white px-3 py-1.5 rounded-lg font-bold transition cursor-pointer">
+                                                        فتح الشيت
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        `;
+            }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // تبديل حالة إنجاز مهمة
+        function toggleTask(workshopId, committeeId, taskId) {
+            const ws = workshopsData.find(w => w.id === workshopId);
+            if (!ws) return;
+            const task = (ws.tasks[committeeId] || []).find(t => t.id === taskId);
+            if (task) {
+                task.done = !task.done;
+                saveData();
+                renderTabs();
+                renderMainContent();
+                showToast(task.done ? 'تم تحديد المهمة كمكتملة ✓' : 'تمت إعادة المهمة لقيد التنفيذ');
+            }
+        }
+
+        // حذف مهمة
+        function deleteTask(workshopId, committeeId, taskId) {
+            const ws = workshopsData.find(w => w.id === workshopId);
+            if (!ws) return;
+            ws.tasks[committeeId] = (ws.tasks[committeeId] || []).filter(t => t.id !== taskId);
+            saveData();
+            renderTabs();
+            renderMainContent();
+            showToast('تم حذف المهمة');
+        }
+
+        // إدارة نافذة إضافة مهمة
+        function openAddTaskModal(workshopId, committeeId, committeeName) {
+            document.getElementById('modalWorkshopId').value = workshopId;
+            document.getElementById('modalCommitteeId').value = committeeId;
+            document.getElementById('modalCommitteeTitle').textContent = `إضافة مهمة إلى ${committeeName}`;
+            document.getElementById('newTaskText').value = '';
+            document.getElementById('newTaskAssignee').value = '';
+            const modal = document.getElementById('addTaskModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('newTaskText').focus();
+        }
+
+        function closeAddTaskModal() {
+            const modal = document.getElementById('addTaskModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function handleAddTaskSubmit(e) {
+            e.preventDefault();
+            const workshopId = parseInt(document.getElementById('modalWorkshopId').value, 10);
+            const committeeId = document.getElementById('modalCommitteeId').value;
+            const text = document.getElementById('newTaskText').value.trim();
+            const phase = document.getElementById('newTaskPhase').value;
+            const assignee = document.getElementById('newTaskAssignee').value.trim();
+
+            if (!text) return;
+
+            const ws = workshopsData.find(w => w.id === workshopId);
+            if (ws) {
+                if (!ws.tasks[committeeId]) ws.tasks[committeeId] = [];
+                ws.tasks[committeeId].push({
+                    id: 'custom-' + Date.now(),
+                    text,
+                    phase,
+                    assignee,
+                    done: false
+                });
+                saveData();
+                renderTabs();
+                renderMainContent();
+                closeAddTaskModal();
+                showToast('تمت إضافة المهمة بنجاح');
+            }
+        }
+
+        // إعادة الضبط
+        function confirmResetModal() {
+            const modal = document.getElementById('resetModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeResetModal() {
+            const modal = document.getElementById('resetModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function executeReset() {
+            workshopsData = JSON.parse(JSON.stringify(DEFAULT_WORKSHOPS));
+            saveData();
+            renderTabs();
+            renderMainContent();
+            closeResetModal();
+            showToast('تمت استعادة البيانات الافتراضية للشيتات السبعة');
+        }
+
+        // تصدير جميع الشيتات إلى ملف CSV متوافق مع Excel باللغة العربية
+        function exportToExcelCSV() {
+            const headers = [
+                'رقم الشيت',
+                'اسم الورشة',
+                'اليوم والتاريخ',
+                'الوقت',
+                'نوع الانعقاد والمكان',
+                'المحاضر / المدرب',
+                'اللجنة المسؤولة',
+                'المهمة المطلوبة',
+                'التوقيت',
+                'المسؤول',
+                'حالة الإنجاز'
+            ];
+
+            const rows = [headers];
+
+            workshopsData.forEach(ws => {
+                COMMITTEES.forEach(comm => {
+                    const tasks = ws.tasks[comm.id] || [];
+                    tasks.forEach(t => {
+                        rows.push([
+                            `شيت ${ws.id}`,
+                            ws.title,
+                            `${ws.day} ${ws.date}`,
+                            ws.time,
+                            `${ws.mode} (${ws.location})`,
+                            `${ws.speaker} - ${ws.affiliation}`,
+                            comm.name,
+                            t.text,
+                            t.phase,
+                            t.assignee || 'غير محدد',
+                            t.done ? 'مكتمل' : 'قيد التنفيذ'
+                        ]);
+                    });
+                });
+            });
+
+            const csvContent = '\uFEFF' + rows.map(row =>
+                row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+            ).join('\n');
+
+            const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'توزيع_مهام_لجان_الأسبوع_التقني_ETC.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showToast('تم تصدير ملف الإكسل لجميع الشيتات بنجاح');
+        }
+
+        // إشعار Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2800);
+        }
+
+        // تشغيل التطبيق عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderTabs();
+            renderMainContent();
+        });
+    </script>
+</body>
+
+</html>
